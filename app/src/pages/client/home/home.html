@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>
+        <h2>{{page_title}}</h2>
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content>
+<ion-grid padding style="padding-top: 2em;height: 100%;">
+    <ion-row justify-content-center style="height: 100%;">
+        <ion-col col-sm-12 col-lg-10>
+      <ion-card>
+
+      <h3>Upload new emails.</h3>
+          
+    <ion-list>
+        
+      <ion-item>
+        <ion-label floating>Email Addresses - Comma Seperated</ion-label>
+        <ion-textarea rows="4" [(ngModel)]="mailInput" type="text"></ion-textarea>
+      </ion-item>
+  
+
+  
+    </ion-list>
+  
+    <button ion-button color="light"  (click)="uploadCsv()">Upload</button>
+  
+    
+      </ion-card>
+      </ion-col>
+      <a href="callto://01952457392" ion-button color="light">RingaDINGDING</a>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+  

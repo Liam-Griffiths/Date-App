@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>
+        <h2>{{page_title}}</h2>
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+
+    <div cards>
+        <div class="grid-full">
+
+            <ion-row style="text-align: center;">
+              <div style="margin:0 auto; margin-top:2em; margin-bottom:2em;">
+                <h1 style="text-align: center; font-size: 5em; font-weight: bold; color:dodgerblue">{{(happy.happyPercent * 100)| number : '1.2-2'}}%</h1>
+                <h2 style="text-align: center; font-size: 3em; color:dodgerblue">Postive Response Rate</h2>
+              </div>
+            </ion-row>
+
+          <ion-row style="text-align: center;">
+              <ion-toolbar>
+                  <ion-segment [(ngModel)]="default">
+                    <ion-segment-button value="1" (click)="showAll()">Show All</ion-segment-button>
+                    <ion-segment-button value="2" (click)="showHappy()">Show Happy</ion-segment-button>
+                    <ion-segment-button value="3" (click)="showSad()">Show Sad</ion-segment-button>
+                  </ion-segment>
+                </ion-toolbar>
+          </ion-row>
+
+          <ion-row>
+            <ion-col *ngFor="let item of currentResArr.slice().reverse()">
+              <div *ngIf="item.isHappy == true">
+
+                <ion-card class="happyCard">
+                    <ion-row>
+                      <ion-col col-9>
+  
+                          <h2>Happy Response</h2>
+                          <h3>{{item.createdAt | date: "medium"}}</h3>
+                          <p>A homolar</p>
+                        
+                      </ion-col>
+                      <ion-col col-3 style="text-align:right;">
+                          <button (click)="navHappy(item)" ion-button item-end>Button</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-card>
+              </div>
+              <div *ngIf="item.isHappy == false">                    
+                <ion-card class="sadCard">
+                  <ion-row>
+                    <ion-col col-9>
+
+                        <h2>Unhappy Response</h2>
+                        <h3>{{item.createdAt | date: "medium"}}</h3>
+                        <p>A homolar</p>
+                      
+                    </ion-col>
+                    <ion-col col-3 style="text-align:right;">
+                        <button (click)="navHappy(item)" ion-button item-end>Button</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card>
+              </div>
+            </ion-col>
+          </ion-row>
+
+        </div>
+      </div>
+
+</ion-content>

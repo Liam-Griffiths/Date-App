@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            margin-bottom: 60px;
+            /* Margin bottom by footer height */
+        }
+
+        @media (max-width: 543px) {
+            html {
+                font-size: 0.75rem;
+            }
+
+            .display-4 {
+                font-size: 2.4em;
+            }
+        }
+
+        @media (min-width: 544px) {
+            html {
+                font-size: 0.8rem;
+            }
+
+        }
+
+        @media (min-width: 992px) {
+            html {
+                font-size: 1rem;
+            }
+
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70px;
+            /* Set the fixed height of the footer here */
+            line-height: 70px;
+            /* Vertically center the text there */
+            background-color: #f5f5f5;
+        }
+
+        .logo-sites {
+            padding-top: 1em;
+            max-height: 12em;
+            width: auto !important;
+            height: auto !important;
+            overflow: hidden !important;
+            margin: 0 auto !important;
+        }
+
+        .REPLACETOSHOW {
+            visibility: hidden;
+            height: 0 !important;
+            display: none;
+        }
+    </style>
+
+    <title>Powered By Review Happy</title>
+
+</head>
+
+<body>
+    <main role="main" class="container" style="padding-top:2em;">
+        <div class="alert alert-primary REPLACETOSHOW" role="alert" style="padding-left:2em;">
+            Welcome back!
+        </div>
+        <div class="jumbotron jumbotron-fluid" style="padding:2em;">
+            <div class="container" style="text-align:center; padding-left:2em; padding-right:2em;">
+                <span style="max-height: 12em; overflow:hidden;">
+                    <img src="/img/logo.png" style="max-height: 12em; max-width: 110%; width: auto;">
+                </span>
+                <h1 class="display-4">REPLACESTR_BUSINESS.</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10" style="margin-bottom:2em;">
+                <div class="card" style="padding:1.5em;">
+                        <div class="jumbotron jumbotron-fluid" style="padding:2em;">
+                                <div class="container" style="text-align:center; padding-left:2em; padding-right:2em;">
+                                        <p class="lead">Thanks for your response.</p>
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">
+                <a href="#">Powered by Review Happy</a>
+            </span>
+            <span class="text-muted float-right">
+                <a class="btn btn-outline-primary" href="#" role="button">Privacy Promise</a>
+            </span>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- ADDITIONAL JS HERE -->        <script type='text/javascript'>
+
+    $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+}
+            /* attach a submit handler to the form */
+            $("#button1").click(function(e) {
+
+                console.log("submit");
+               $.ajax({
+                    type: "post",
+                    url: "http://localhost:3000/api/happy",
+                    data: {
+                        happyVal: 0, 
+                        uniqId: 'REPLACESTR_ID'
+                        , contactEmail: $('#email').val()
+                        , refEmail: $('#email').val()
+                        , contactPhone: $('#phone').val()
+                        , reviewText: $('#textr').val()
+                    },
+                    contentType: "application/x-www-form-urlencoded",
+                    success: function (responseData, textStatus, jqXHR) {
+                        alert("data saved")
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                        alert("data not saved")
+                    }
+                });
+
+                /* stop form from submitting normally */
+                event.preventDefault();
+
+            });
+    </script>
+</body>
+
+</html>

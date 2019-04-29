@@ -1,0 +1,7 @@
+{
+  "name": "ore-date",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

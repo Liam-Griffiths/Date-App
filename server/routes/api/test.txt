@@ -1,0 +1,137 @@
+var router = require('express').Router();
+var auth = require('../auth');
+let agenda = require('../../jobs/agenda');
+var mongoose = require('mongoose');
+var WaitItem = mongoose.model('WaitItem');
+var User = mongoose.model('User');
+var HappyRes = mongoose.model('HappyRes');
+const path = require("path");
+const fs = require('fs');
+const publicPath = path.resolve(__dirname, "../../public"); 
+
+//assuming app is express Object.
+router.get('/',function(req,res){
+    
+    var uniqId = req.query.x;
+    var happyVal = req.query.y;
+
+    if (typeof uniqId !== 'undefined' && uniqId !== null){
+        if (typeof happyVal !== 'undefined' && happyVal !== null){
+
+            WaitItem.find({uniqueIdentifier: uniqId}).then(function(item){
+                if (!item) { return res.sendStatus(401); }
+
+                User.findById(item[0].clientBusiness).then(function(user){
+                    if (!user) { return res.sendStatus(401); }
+                    
+                    var name = user.username;
+                    var targetPlatform = "google"; // user.targetPlatform
+
+                    var flag = false;
+
+                    if(happyVal == 0) // Negative
+                    {
+                        var stringVal = "templates-page/unhappy.html";
+                        var htmlPath = path.join(publicPath, stringVal);
+                        fs.readFile(htmlPath, 'utf8', function (err,data) {
+                            if (err) {
+                                res.json("Something went wrong.");
+                                return console.log(err);
+                            }
+                            var resHtml = data;
+                    
+                            resHtml = resHtml.replace('REPLACESTR_BUSINESS', name);
+                    
+                            res.send(resHtml);
+                        });
+                        flag = true;
+                    }
+
+                    if(happyVal == 1) // Positive
+                    {
+
+                        var stringVal = "templates-page/happy.html";
+                        var htmlPath = path.join(publicPath, stringVal);
+
+                        var imgPath = "";
+                        var platformLink = "";
+
+                        if(item[0].active == true)
+                        {
+
+                            var newRes= new HappyRes();
+
+                            newRes.clientBusiness = item[0].clientBusiness();
+                            newRes.isHappy = 1;
+                            newRes.contactEmail = "";
+                            newRes.contactPhone = "";
+                            newRes.reviewText = "";
+
+                            newRes.save().then(function()
+                            {
+                                console.log("Positive Response!");
+                            });
+
+                            item[0].deactivate();
+                        }
+
+                        switch(targetPlatform) {
+                            case "facebook":
+                                imgPath = "/img/review-sites/facebook.png";
+                                platformLink = "#";
+                                break;
+                            case "google":
+                                imgPath = "/img/review-sites/google.png";
+                                platformLink = "#";
+                                break;
+                            case "tripadvisor":
+                                imgPath = "/img/review-sites/tripadvisor.png";
+                                platformLink = "#";
+                                break;
+                            case "trustpilot":
+                                imgPath = "/img/review-sites/trustpilot.png";
+                                platformLink = "#";
+                                break;
+                            case "yelp":
+                                imgPath = "/img/review-sites/yelp.png";
+                                platformLink = "#";
+                                break;
+                            default:
+                                imgPath = "/img/logo.png";
+                                platformLink = "#";
+                                break;
+                        }
+
+                        fs.readFile(htmlPath, 'utf8', function (err,data) {
+                            if (err) {
+                                res.json("Something went wrong.");
+                                return console.log(err);
+                            }
+                            var resHtml = data;
+
+                            if(item.active == false){
+                                resHtml = resHtml.replace('REPLACETOSHOW', '');
+                            }
+                    
+                            resHtml = resHtml.replace('REPLACESTR_BUSINESS', name);
+                            resHtml = resHtml.replace('REPLACESTR_IMAGE', imgPath);
+                            resHtml = resHtml.replace('REPLACESTR_LINK', platformLink);
+                    
+                            res.send(resHtml);
+                        });
+                        flag = true;
+                    }
+
+                    if(flag != true)
+                    {
+                        res.json("Something went wrong.");
+                    }
+
+                }).catch(res.json("Something went wrong."));
+            }).catch(res.json("Something went wrong."));
+
+        }else{res.json("Something went wrong.");}
+    }else{res.json("Something went wrong.");}
+});
+
+module.exports = router;

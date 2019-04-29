@@ -1,0 +1,2 @@
+The Business name is: REPLACESTR_BUSINESS
+The Unique string is: <h1><a href="http://192.168.0.10:3000/api/review?x=REPLACESTR_REF&y=1">HAPPY LINK</a></h1>ESTR_REF&y=1">HAPPY LINK</a></h1>

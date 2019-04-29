@@ -1,0 +1,19 @@
+<ion-split-pane>
+    <ion-menu [content]="someContent">
+        <ion-header>
+            <ion-toolbar>
+            <ion-title style="text-align:center; padding: 1.5em;">
+                <img src="assets/imgs/mast-logo.png" id="mast-nav"  style="align-items: center">
+            </ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content style="padding:5em;">
+            <ion-list>
+                <ion-item *ngFor="let page of nav_pages;"  style="padding-left: 3em; padding-right: 3em;">
+                    <button (click)="navigate(page)" ion-button full style="height:3em;">{{getTitle(page)}}</button>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-nav [root]="rootPage" #someContent main></ion-nav>
+</ion-split-pane>
